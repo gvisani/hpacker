@@ -1,0 +1,50 @@
+Metadata-Version: 2.1
+Name: hpacker
+Version: 0.1.0
+Summary: Holographic Rotationally Equivariant Convolutional Neural Network for Protein Side-Chain Packing
+Home-page: https://github.com/gvisani/hpacker
+Author: Gian Marco Visani
+Author-email: gvisan01@.cs.washington.edu
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+
+# hpacker
+
+## Installation
+
+Create the `hpacker` conda environment by running the following
+
+```bash
+conda env create -f env.yml
+```
+
+to install the necessary dependencies.
+
+Then run
+
+```bash
+pip install .
+```
+
+to install the code in this repo as a package.
+
+If you're going to make edits to the code, run
+
+```bash
+pip install -e .
+```
+
+so you can test your changes.
+
+
+## Usage
+
+To use (our pre-trained) HPacker on a query structure...
+
+
+## Training HPacker
+
+*Coming soon*
+
+
+

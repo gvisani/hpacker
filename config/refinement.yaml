@@ -1,0 +1,58 @@
+
+# data hparams
+data_filepath: '/gscratch/scrubbed/gvisan01/dlpacker/zernikegrams/zernikegrams-all_sidechains-{pdb_list_filename}-r_max={rcut}-l_max={lmax}-radial_func_mode={radial_func_mode}-radial_func_max={radial_func_max}-channels={channels}-rst_normalization={rst_normalization}.hdf5'
+true_sidechains_filepath: '/gscratch/scrubbed/gvisan01/dlpacker/neighborhoods/neighborhoods-{pdb_list_filename}-r_max={rcut}-central_residue_only.hdf5'
+downsampled_neighborhoods_filepath: '/gscratch/scrubbed/gvisan01/dlpacker/neighborhoods/neighborhoods_no_central_res-{pdb_list_filename}-r_max={rcut}.hdf5'
+num_train_datasets: 10
+pdb_list_filename_template: 'dlpacker_{split}'
+rcut: 10
+lmax: 5
+radial_func_mode: ks
+radial_func_max: 12
+channels: 'C,N,O,S,all_other_elements,charge'
+rst_normalization: 'square'
+normalize_input: true
+
+# model hparams
+model_type: 'so3_convnet_cond_beginning'
+model_hparams: 
+  conditioning_dim: 20
+  conditioning_hidden_dim: 64
+  output_dim: 8
+  n_cg_blocks: 5
+  n_fc_blocks: 3
+  fc_h_dim: 128
+  fc_nonlin: 'silu'
+  dropout_rate: 0.1
+  use_batch_norm_in_fc: false
+  ch_size_list: [96, 96, 96, 96, 96]
+  ls_nonlin_rule_list: ['full', 'full', 'full', 'full', 'full']
+  ch_nonlin_rule_list: ['elementwise', 'elementwise', 'elementwise', 'elementwise', 'elementwise']
+  do_initial_linear_projection: true
+  ch_initial_linear_projection: 96
+  lmax_list: [5, 5, 5, 5, 0]
+  use_additive_skip_connections: true
+  use_batch_norm: false
+  weights_initializer: null
+  norm_type: layer_nonlin
+  normalization: component
+  norm_balanced: false
+  norm_affine: true
+  norm_nonlinearity: swish
+  norm_location: between
+  linearity_first: false
+  filter_symmetric: true
+  
+
+# training hparams
+n_epochs: 15
+lr: 0.001
+lr_scheduler: 'reduce_lr_on_plateau'
+factor: 0.2
+patience: 4`
+threshold: 0.0001
+batch_size: 512
+weight_chis: false
+
+# rng seed, for reproducibility
+seed: 1234567

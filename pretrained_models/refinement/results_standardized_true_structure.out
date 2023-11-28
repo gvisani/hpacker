@@ -1,0 +1,769 @@
+1/82 - T0949
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 1.74 seconds
+All residues: 109
+Core residues: 19
+Surface residues: 56
+Accuracy:	83	68	39	44	
+MAE:	16	27	51	49	
+
+Iteration 1/5
+Refinement for 1 times took 0.68 seconds
+All residues: 109
+Core residues: 19
+Surface residues: 56
+Accuracy:	67	64	39	33	
+MAE:	27	31	41	44	
+
+Iteration 2/5
+Refinement for 2 times took 1.36 seconds
+All residues: 109
+Core residues: 19
+Surface residues: 56
+Accuracy:	67	64	39	33	
+MAE:	27	31	41	44	
+
+Iteration 3/5
+Refinement for 3 times took 2.06 seconds
+All residues: 109
+Core residues: 19
+Surface residues: 56
+Accuracy:	67	64	39	33	
+MAE:	27	31	41	44	
+
+Iteration 4/5
+Refinement for 4 times took 2.74 seconds
+All residues: 109
+Core residues: 19
+Surface residues: 56
+Accuracy:	67	64	39	33	
+MAE:	27	31	41	44	
+
+Iteration 5/5
+Refinement for 5 times took 3.43 seconds
+All residues: 109
+Core residues: 19
+Surface residues: 56
+Accuracy:	67	64	39	33	
+MAE:	27	31	41	44	
+
+2/82 - T0950
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 3.19 seconds
+All residues: 309
+Core residues: 79
+Surface residues: 147
+Accuracy:	76	66	46	62	
+MAE:	19	29	41	36	
+
+Iteration 1/5
+Refinement for 1 times took 2.04 seconds
+All residues: 309
+Core residues: 79
+Surface residues: 147
+Accuracy:	58	55	37	57	
+MAE:	31	35	45	44	
+
+Iteration 2/5
+Refinement for 2 times took 4.10 seconds
+All residues: 309
+Core residues: 79
+Surface residues: 147
+Accuracy:	58	55	37	57	
+MAE:	31	35	45	44	
+
+Iteration 3/5
+Refinement for 3 times took 6.16 seconds
+All residues: 309
+Core residues: 79
+Surface residues: 147
+Accuracy:	58	55	37	57	
+MAE:	31	35	45	44	
+
+Iteration 4/5
+Refinement for 4 times took 8.25 seconds
+All residues: 309
+Core residues: 79
+Surface residues: 147
+Accuracy:	58	55	37	57	
+MAE:	31	35	45	44	
+
+Iteration 5/5
+Refinement for 5 times took 10.44 seconds
+All residues: 309
+Core residues: 79
+Surface residues: 147
+Accuracy:	58	55	37	57	
+MAE:	31	35	45	44	
+
+3/82 - T0951
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 2.40 seconds
+All residues: 234
+Core residues: 85
+Surface residues: 98
+Accuracy:	83	67	46	28	
+MAE:	17	29	42	55	
+
+Iteration 1/5
+Refinement for 1 times took 1.49 seconds
+All residues: 234
+Core residues: 85
+Surface residues: 98
+Accuracy:	68	60	28	28	
+MAE:	28	34	62	69	
+
+Iteration 2/5
+Refinement for 2 times took 2.97 seconds
+All residues: 234
+Core residues: 85
+Surface residues: 98
+Accuracy:	68	60	28	28	
+MAE:	28	34	62	69	
+
+Iteration 3/5
+Refinement for 3 times took 4.46 seconds
+All residues: 234
+Core residues: 85
+Surface residues: 98
+Accuracy:	68	60	28	28	
+MAE:	28	34	62	69	
+
+Iteration 4/5
+Refinement for 4 times took 5.97 seconds
+All residues: 234
+Core residues: 85
+Surface residues: 98
+Accuracy:	68	60	28	28	
+MAE:	28	34	62	69	
+
+Iteration 5/5
+Refinement for 5 times took 7.45 seconds
+All residues: 234
+Core residues: 85
+Surface residues: 98
+Accuracy:	68	60	28	28	
+MAE:	28	34	62	69	
+
+4/82 - T0953s1
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 0.45 seconds
+All residues: 51
+Core residues: 1
+Surface residues: 45
+Accuracy:	82	62	50	33	
+MAE:	18	31	58	43	
+
+Iteration 1/5
+Refinement for 1 times took 0.27 seconds
+All residues: 51
+Core residues: 1
+Surface residues: 45
+Accuracy:	75	62	50	33	
+MAE:	21	32	55	44	
+
+Iteration 2/5
+Refinement for 2 times took 0.54 seconds
+All residues: 51
+Core residues: 1
+Surface residues: 45
+Accuracy:	75	62	50	33	
+MAE:	21	32	55	44	
+
+Iteration 3/5
+Refinement for 3 times took 0.80 seconds
+All residues: 51
+Core residues: 1
+Surface residues: 45
+Accuracy:	75	62	50	33	
+MAE:	21	32	55	44	
+
+Iteration 4/5
+Refinement for 4 times took 1.07 seconds
+All residues: 51
+Core residues: 1
+Surface residues: 45
+Accuracy:	75	62	50	33	
+MAE:	21	32	55	44	
+
+Iteration 5/5
+Refinement for 5 times took 1.33 seconds
+All residues: 51
+Core residues: 1
+Surface residues: 45
+Accuracy:	75	62	50	33	
+MAE:	21	32	55	44	
+
+5/82 - T0953s2
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 1.88 seconds
+All residues: 172
+Core residues: 38
+Surface residues: 84
+Accuracy:	87	71	58	27	
+MAE:	16	23	36	60	
+
+Iteration 1/5
+Refinement for 1 times took 1.12 seconds
+All residues: 172
+Core residues: 38
+Surface residues: 84
+Accuracy:	76	60	55	27	
+MAE:	24	30	42	56	
+
+Iteration 2/5
+Refinement for 2 times took 2.25 seconds
+All residues: 172
+Core residues: 38
+Surface residues: 84
+Accuracy:	76	60	55	27	
+MAE:	24	30	42	56	
+
+Iteration 3/5
+Refinement for 3 times took 3.39 seconds
+All residues: 172
+Core residues: 38
+Surface residues: 84
+Accuracy:	76	60	55	27	
+MAE:	24	30	42	56	
+
+Iteration 4/5
+Refinement for 4 times took 4.60 seconds
+All residues: 172
+Core residues: 38
+Surface residues: 84
+Accuracy:	76	60	55	27	
+MAE:	24	30	42	56	
+
+Iteration 5/5
+Refinement for 5 times took 5.83 seconds
+All residues: 172
+Core residues: 38
+Surface residues: 84
+Accuracy:	76	60	55	27	
+MAE:	24	30	42	56	
+
+6/82 - T0954
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 3.67 seconds
+All residues: 296
+Core residues: 136
+Surface residues: 100
+Accuracy:	77	66	31	41	
+MAE:	20	30	59	53	
+
+Iteration 1/5
+Refinement for 1 times took 2.08 seconds
+All residues: 296
+Core residues: 136
+Surface residues: 100
+Accuracy:	63	52	25	41	
+MAE:	32	40	59	55	
+
+Iteration 2/5
+Refinement for 2 times took 4.17 seconds
+All residues: 296
+Core residues: 136
+Surface residues: 100
+Accuracy:	63	52	25	41	
+MAE:	32	40	59	55	
+
+Iteration 3/5
+Refinement for 3 times took 6.27 seconds
+All residues: 296
+Core residues: 136
+Surface residues: 100
+Accuracy:	63	52	25	41	
+MAE:	32	40	59	55	
+
+Iteration 4/5
+Refinement for 4 times took 8.38 seconds
+All residues: 296
+Core residues: 136
+Surface residues: 100
+Accuracy:	63	52	25	41	
+MAE:	32	40	59	55	
+
+Iteration 5/5
+Refinement for 5 times took 10.60 seconds
+All residues: 296
+Core residues: 136
+Surface residues: 100
+Accuracy:	63	52	25	41	
+MAE:	32	40	59	55	
+
+7/82 - T0955
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 0.41 seconds
+All residues: 41
+Core residues: 4
+Surface residues: 27
+Accuracy:	39	52	29	30	
+MAE:	50	32	73	57	
+
+Iteration 1/5
+Refinement for 1 times took 0.24 seconds
+All residues: 41
+Core residues: 4
+Surface residues: 27
+Accuracy:	27	48	18	30	
+MAE:	63	38	79	59	
+
+Iteration 2/5
+Refinement for 2 times took 0.47 seconds
+All residues: 41
+Core residues: 4
+Surface residues: 27
+Accuracy:	27	48	18	30	
+MAE:	63	38	79	59	
+
+Iteration 3/5
+Refinement for 3 times took 0.71 seconds
+All residues: 41
+Core residues: 4
+Surface residues: 27
+Accuracy:	27	48	18	30	
+MAE:	63	38	79	59	
+
+Iteration 4/5
+Refinement for 4 times took 0.95 seconds
+All residues: 41
+Core residues: 4
+Surface residues: 27
+Accuracy:	27	48	18	30	
+MAE:	63	38	79	59	
+
+Iteration 5/5
+Refinement for 5 times took 1.19 seconds
+All residues: 41
+Core residues: 4
+Surface residues: 27
+Accuracy:	27	48	18	30	
+MAE:	63	38	79	59	
+
+8/82 - T0957s1
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 1.38 seconds
+All residues: 137
+Core residues: 24
+Surface residues: 77
+Accuracy:	74	73	44	32	
+MAE:	21	21	44	57	
+
+Iteration 1/5
+Refinement for 1 times took 0.83 seconds
+All residues: 137
+Core residues: 24
+Surface residues: 77
+Accuracy:	65	62	44	41	
+MAE:	28	30	45	53	
+
+Iteration 2/5
+Refinement for 2 times took 1.67 seconds
+All residues: 137
+Core residues: 24
+Surface residues: 77
+Accuracy:	65	62	44	41	
+MAE:	28	30	45	53	
+
+Iteration 3/5
+Refinement for 3 times took 2.51 seconds
+All residues: 137
+Core residues: 24
+Surface residues: 77
+Accuracy:	65	62	44	41	
+MAE:	28	30	45	53	
+
+Iteration 4/5
+Refinement for 4 times took 3.35 seconds
+All residues: 137
+Core residues: 24
+Surface residues: 77
+Accuracy:	65	62	44	41	
+MAE:	28	30	45	53	
+
+Iteration 5/5
+Refinement for 5 times took 4.18 seconds
+All residues: 137
+Core residues: 24
+Surface residues: 77
+Accuracy:	65	62	44	41	
+MAE:	28	30	45	53	
+
+9/82 - T0957s2
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 1.40 seconds
+All residues: 139
+Core residues: 42
+Surface residues: 69
+Accuracy:	78	72	58	67	
+MAE:	19	27	29	24	
+
+Iteration 1/5
+Refinement for 1 times took 0.85 seconds
+All residues: 139
+Core residues: 42
+Surface residues: 69
+Accuracy:	67	59	61	60	
+MAE:	26	31	28	23	
+
+Iteration 2/5
+Refinement for 2 times took 1.69 seconds
+All residues: 139
+Core residues: 42
+Surface residues: 69
+Accuracy:	67	59	61	60	
+MAE:	26	31	28	23	
+
+Iteration 3/5
+Refinement for 3 times took 2.57 seconds
+All residues: 139
+Core residues: 42
+Surface residues: 69
+Accuracy:	67	59	61	60	
+MAE:	26	31	28	23	
+
+Iteration 4/5
+Refinement for 4 times took 3.55 seconds
+All residues: 139
+Core residues: 42
+Surface residues: 69
+Accuracy:	67	59	61	60	
+MAE:	26	31	28	23	
+
+Iteration 5/5
+Refinement for 5 times took 4.41 seconds
+All residues: 139
+Core residues: 42
+Surface residues: 69
+Accuracy:	67	59	61	60	
+MAE:	26	31	28	23	
+
+10/82 - T0958
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 0.65 seconds
+All residues: 68
+Core residues: 8
+Surface residues: 41
+Accuracy:	78	88	50	46	
+MAE:	20	15	48	48	
+
+Iteration 1/5
+Refinement for 1 times took 0.38 seconds
+All residues: 68
+Core residues: 8
+Surface residues: 41
+Accuracy:	65	73	50	46	
+MAE:	30	26	49	51	
+
+Iteration 2/5
+Refinement for 2 times took 0.75 seconds
+All residues: 68
+Core residues: 8
+Surface residues: 41
+Accuracy:	65	73	50	46	
+MAE:	30	26	49	51	
+
+Iteration 3/5
+Refinement for 3 times took 1.12 seconds
+All residues: 68
+Core residues: 8
+Surface residues: 41
+Accuracy:	65	73	50	46	
+MAE:	30	26	49	51	
+
+Iteration 4/5
+Refinement for 4 times took 1.49 seconds
+All residues: 68
+Core residues: 8
+Surface residues: 41
+Accuracy:	65	73	50	46	
+MAE:	30	26	49	51	
+
+Iteration 5/5
+Refinement for 5 times took 1.85 seconds
+All residues: 68
+Core residues: 8
+Surface residues: 41
+Accuracy:	65	73	50	46	
+MAE:	30	26	49	51	
+
+11/82 - T0959
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 1.76 seconds
+All residues: 148
+Core residues: 47
+Surface residues: 65
+Accuracy:	76	66	45	46	
+MAE:	21	27	39	44	
+
+Iteration 1/5
+Refinement for 1 times took 1.05 seconds
+All residues: 148
+Core residues: 47
+Surface residues: 65
+Accuracy:	67	56	36	42	
+MAE:	26	33	43	43	
+
+Iteration 2/5
+Refinement for 2 times took 2.08 seconds
+All residues: 148
+Core residues: 47
+Surface residues: 65
+Accuracy:	67	56	36	42	
+MAE:	26	33	43	43	
+
+Iteration 3/5
+Refinement for 3 times took 3.10 seconds
+All residues: 148
+Core residues: 47
+Surface residues: 65
+Accuracy:	67	56	36	42	
+MAE:	26	33	43	43	
+
+Iteration 4/5
+Refinement for 4 times took 4.14 seconds
+All residues: 148
+Core residues: 47
+Surface residues: 65
+Accuracy:	67	56	36	42	
+MAE:	26	33	43	43	
+
+Iteration 5/5
+Refinement for 5 times took 5.15 seconds
+All residues: 148
+Core residues: 47
+Surface residues: 65
+Accuracy:	67	56	36	42	
+MAE:	26	33	43	43	
+
+12/82 - T0960
+Running on cuda.
+12700 415x0e+351x1e+351x2e+351x3e+351x4e+351x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2909192 parameters
+Running on cuda.
+2872 142x0e+78x1e+78x2e+78x3e+78x4e+78x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+3456 96x0e+96x1e+96x2e+96x3e+96x4e+96x5e
+96 96x0e
+There are 2751944 parameters
+Initial guess took 3.65 seconds
+All residues: 291
+Core residues: 37
+Surface residues: 188
+Accuracy:	79	70	42	45	
+MAE:	20	25	51	45	
+
+Iteration 1/5
+Refinement for 1 times took 2.12 seconds
+All residues: 291
+Core residues: 37
+Surface residues: 188
+Accuracy:	67	61	36	45	
+MAE:	31	31	51	48	
+
+Iteration 2/5
+Refinement for 2 times took 4.24 seconds
+All residues: 291
+Core residues: 37
+Surface residues: 188
+Accuracy:	67	61	36	45	
+MAE:	31	31	51	48	
+
+Iteration 3/5
