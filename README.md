@@ -55,7 +55,7 @@ hpacker.reconstruct_sidechains(num_refinement_iterations=5)
 hpacker.write_pdb('reconstructed_from_bb_only_T0950.pdb')
 ```
 
-See the provided [hpacker.ipynb notebook](hpacker.ipynb) for more examples, as well as explanations of the inner workings of HPacker.
+See the provided [hpacker.ipynb notebook](hpacker.ipynb) for more examples, as well as explanations of the inner workings of H-Packer.
 
 ## Training HPacker
 
@@ -65,4 +65,17 @@ See the provided [hpacker.ipynb notebook](hpacker.ipynb) for more examples, as w
 ## Limitations
 
 - Cannot process hetero residues, since they do not play nice with BioPython's ```internal_coords``` module.
+
+## Citation
+
+If you used H-Packer or learned something from it, please cite us:
+
+@misc{visani2023hpacker,
+      title={H-Packer: Holographic Rotationally Equivariant Convolutional Neural Network for Protein Side-Chain Packing}, 
+      author={Gian Marco Visani and William Galvin and Michael Neal Pun and Armita Nourmohammad},
+      year={2023},
+      eprint={2311.09312},
+      archivePrefix={arXiv},
+      primaryClass={q-bio.BM}
+}
 
