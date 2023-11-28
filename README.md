@@ -2,6 +2,8 @@
 
 This repo contains code for [H-Packer](https://arxiv.org/abs/2311.09312), a method for side-chain packing based upon rotationally equivariant convolutional neural networks.
 
+![framework](hpacker.jpg)
+
 ## Currently supported features
 
 - Packing side-chain conformations of a full structure, providing a backbone structure and desired sequence information
@@ -62,5 +64,5 @@ See the provided [hpacker.ipynb notebook](hpacker.ipynb) for more examples, as w
 
 ## Limitations
 
-Cannot process hetero residues, since they do not play nice with BioPython's ```internal_coords``` module.
+- Cannot process hetero residues, since they do not play nice with BioPython's ```internal_coords``` module.
 
