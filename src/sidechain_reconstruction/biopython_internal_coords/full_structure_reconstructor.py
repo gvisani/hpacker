@@ -205,6 +205,13 @@ class FullStructureReconstructor(object):
             if residue.resname in THE20 and not self._is_hetero(residue):
                 res_id_to_resname[self._get_residue_id(residue)] = residue.resname
         return res_id_to_resname
+
+    def update_resnames(self, res_id_to_resname_to_update: Dict[Tuple, str]):
+        '''
+        Updates the res_id_to_resname dictionary.
+        Used whenever we want to change the amino acid type of a residue, for mutations and whatnot.
+        '''
+        self._update_resnames(res_id_to_resname_to_update, False, False)
     
     def _update_resnames(self, res_id_to_resname_to_update: Dict[Tuple, str], original_structure: bool = False, copy_structure: bool = False):
         '''
@@ -243,6 +250,12 @@ class FullStructureReconstructor(object):
         Returns the amino acid type of the specified res_id.
         '''
         return self._get_resname_from_res_id(res_id, original_structure=original_structure, copy_structure=copy_structure)
+
+    def get_residue(self, res_id: Tuple, original_structure: bool = False, copy_structure: bool = False):
+        '''
+        Returns the residue object corresponding to the specified res_id.
+        '''
+        return self._get_residue_from_res_id(res_id, original_structure=original_structure, copy_structure=copy_structure)
 
     def _get_residue_from_res_id(self, res_id: Tuple, original_structure: bool = False, copy_structure: bool = False):
         '''
@@ -318,6 +331,12 @@ class FullStructureReconstructor(object):
         for atom_id in atoms_to_detach:
             residue.detach_child(atom_id)
 
+    def remove_all_sidechains(self, keep_CB: bool = False):
+        '''
+        Removes all sidechains from internal representation of structure.
+        NOTE: DOES NOT remove hetero residues. This is not ideal, BUT the hetero residues do not play nice with the internal_coords module, so we have to keep them.
+        '''
+        self._remove_all_sidechains(self.structure, keep_CB=keep_CB)
 
     def _remove_all_sidechains(self, structure: Structure, keep_CB: bool = False):
         '''
@@ -607,21 +626,6 @@ class FullStructureReconstructor(object):
         '''
         raise NotImplementedError('Child class must implement this method.')
 
-
-    def populate_sidechains(self,
-                            res_id_to_resname: Optional[Dict[Tuple, str]] = None,
-                            **kwargs):
-        '''
-        Populates the internal representation of the structure with the desired amino acid compositions.
-        If provided, use the specified amino acid types for the specified residues.
-        Otherwise, use the amino acid types specified in the PDB file.
-        '''
-        if res_id_to_resname is not None:
-            self._update_resnames(res_id_to_resname)
-        
-        raise NotImplementedError('Child class must implement this method. But remember to update resnames!')
-    
-
     def write_pdb(self,
                   output_pdbpath: str,
                   original_structure = False,
@@ -707,7 +711,7 @@ class FullStructureReconstructor(object):
     
     def standardize_original_structure(self):
         '''
-        Just reconstructs from sels, but sets the original structure to the reconstructed version
+        Just reconstructs from self, but sets the original structure to the reconstructed version
         '''
         copy_of_structure = self.structure.copy()
         copy_of_copy_structure = self.structure_copy.copy()

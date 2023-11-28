@@ -1,4 +1,12 @@
 
+'''
+
+This script is for training the individual SO3CNNs comprising HPacker.
+Training code is currently not operational, but you can use our pre-trained models found in the `pretrained` folder.
+See hpacker.ipynb for a tutorial on how to use a trained HPacker model for 
+
+'''
+
 import os
 import yaml
 import json
@@ -7,20 +15,19 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 
-from runtime.sidechain_prediction.src.training import run_training
-from runtime.sidechain_prediction.src.training_divided_dataset import run_training_divided_dataset
-from runtime.sidechain_prediction.src.inference import run_inference
-from runtime.sidechain_prediction.src.simple_reconstruction import reconstruction_null, reconstruction_from_predictions, plot_mae_per_chi_binned_by_proportion_of_sidechains_removed
-from runtime.sidechain_prediction.src.viz import plot_chi_angle_predictions_distributions_vs_true
-
-from protein_holography_pytorch.utils.argparse import *
+from src.training.training import run_training
+from src.training.training_divided_dataset import run_training_divided_dataset
+from src.training.inference import run_inference
+from src.training.simple_reconstruction import reconstruction_null, reconstruction_from_predictions, plot_mae_per_chi_binned_by_proportion_of_sidechains_removed
+from src.training.viz import plot_chi_angle_predictions_distributions_vs_true
+from src.utils.argparse import *
 
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_dir', type=str, default='runs/throwaway')
-    parser.add_argument('--training_config', type=optional_str, default='config/sime_task/so3_convnet_sin_cos.yaml',
+    parser.add_argument('--model_dir', type=str, default='pretrained_models/refinement')
+    parser.add_argument('--training_config', type=optional_str, default='config/refinement.yaml',
                         help='Path to training config file. Ignored when --eval_only is set to True.')
     parser.add_argument('--eval_only', action='store_true', default=False)
     parser.add_argument('--tests_only', action='store_true', default=False,

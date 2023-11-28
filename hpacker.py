@@ -323,6 +323,7 @@ class HPacker(FullStructureReconstructor):
                       res_id: Tuple):
         '''
         Adds a sidechain to the specified residue.
+        TODO: Update this. Currently uses the initial guess model only, i.e. only uses backbone information. Give the option to use the refinement model or a conditiuoned/downsampled model.
         '''
         resname = self._get_resname_from_res_id(res_id)
         if resname == 'GLY': # nothing to do!
@@ -743,6 +744,34 @@ class HPacker(FullStructureReconstructor):
             angles_trace.append(deepcopy(refined_res_id_to_angles))
         
         if return_trace_of_predicted_angles: return angles_trace
+    
+    def refine_sidechains(self,
+                            num_refinement_iterations: int = 5,
+                            batch_size: int = 128,
+                            return_trace_of_predicted_angles: bool = False):
+        '''
+        Use this when you already have resonably good sidechains in the structure and only want to refine them.
+        '''
+
+        ## add all dummy atoms to the copy structure
+        self._add_all_dummy_atoms(self.structure_copy)
+        
+        angles_trace = []
+
+        # refinement!
+        time_refinement = 0
+        for i in range(num_refinement_iterations):
+            if self.verbose: print(f'Iteration {i+1}/{num_refinement_iterations}')
+
+            start = time.time()
+            refined_res_id_to_angles = self.refinement(batch_size=batch_size)
+            elapsed = time.time() - start
+            time_refinement += elapsed
+            if self.verbose: print('Refinement for %d times took %.2f seconds' % (i+1, time_refinement))
+
+            angles_trace.append(deepcopy(refined_res_id_to_angles))
+        
+        if return_trace_of_predicted_angles: return angles_trace
 
             
 def stack_dicts(dict_list):
@@ -789,41 +818,3 @@ def pretty_print_scores(dataset, accuracy_per_angle_all, mae_per_angle_all, glob
         print('%.0f' % (np.mean(np.vstack(mae_per_angle_trace), axis=0)[chi_angle_idx].item()), end='\t')
     print()
     print()
-
-
-if __name__ == '__main__':
-
-    model_dirs = [
-        'pretrained_models/initial_guess',
-        'pretrained_models/refinement',
-    ]
-    virtual_CB = False
-    standardize_original_structure = False
-
-    pdb_lists = {
-        'CASP13': '/gscratch/scrubbed/gvisan01/dlpacker/pdb_lists/casp13_targets_testing.txt',
-        'CASP14': '/gscratch/scrubbed/gvisan01/dlpacker/pdb_lists/casp14_targets_testing.txt',
-    }
-    pdbdir = '/gscratch/scrubbed/gvisan01/dlpacker/casp_targets/'
-
-
-
-    for dataset in ['CASP13', 'CASP14']:
-        pdb_list = pdb_lists[dataset]
-        with open(pdb_list, 'r') as f:
-            pdbs = f.read().splitlines()
-        
-
-        for i, pdb in enumerate(pdbs):
-            print(f'{i+1}/{len(pdbs)} - {pdb}')
-            pdbpath = os.path.join(pdbdir, pdb + '.pdb')
-
-            fsr = HPacker(model_dirs, pdbpath, remove_sidechains=True)
-
-            try:
-                (mae_per_angle_4, accuracy_per_angle_4, real, predicted, aas, refined_rmsds),\
-                (initial_guess_mae_per_angle_4, initial_guess_accuracy_per_angle_4, initial_guess_real, initial_guess_predicted, initial_guess_aas, initial_guess_rmsds),\
-                (intermediate_mae_per_angle_4, intermediate_accuracy_per_angle_4, intermediate_real, intermediate_predicted, intermediate_aas, intermediate_rmsds) = fsr.reconstruct_sidechains(seed=42, batch_size=batch_size, standardize_original_structure=standardize_original_structure)
-            except AssertionError:
-                print('Skipping', pdb)
-                continue
