@@ -70,12 +70,14 @@ See the provided [hpacker.ipynb notebook](hpacker.ipynb) for more examples, as w
 
 If you used H-Packer or learned something from it, please cite us:
 
+```
 @misc{visani2023hpacker,
       title={H-Packer: Holographic Rotationally Equivariant Convolutional Neural Network for Protein Side-Chain Packing}, 
       author={Gian Marco Visani and William Galvin and Michael Neal Pun and Armita Nourmohammad},
       year={2023},
       eprint={2311.09312},
       archivePrefix={arXiv},
+```
       primaryClass={q-bio.BM}
 }
 
