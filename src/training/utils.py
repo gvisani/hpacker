@@ -12,11 +12,11 @@ from src.so3_cnn.models import CGNet, SO3_ConvNet, SO3_ConvNet_WithInvariantCond
 from src.so3_cnn.cg_coefficients import get_w3j_coefficients
 from .losses import AngleLoss, SinCosAngleLoss, VectorLoss, loss_per_chi_angle
 
-def general_model_init(model_dir, hparams, data_irreps):
+def general_model_init(model_dir, hparams, data_irreps, verbose=True):
 
     # setup device
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    print('Running on %s.' % (device), flush=True)
+    if verbose: print('Running on %s.' % (device), flush=True)
 
     # load w3j coefficients
     w3j_matrices = get_w3j_coefficients(hparams['lmax'])
@@ -70,7 +70,7 @@ def general_model_init(model_dir, hparams, data_irreps):
     num_params = 0
     for param in model.parameters():
         num_params += torch.flatten(param.data).shape[0]
-    print('There are %d parameters' % (num_params), flush=True)
+    if verbose: print('There are %d parameters' % (num_params), flush=True)
 
     if hparams['model_type'] in {'so3_convnet_vec', 'so3_convnet_vec_cond'}:
         assert hparams['model_hparams']['output_dim'] in {1, 4}

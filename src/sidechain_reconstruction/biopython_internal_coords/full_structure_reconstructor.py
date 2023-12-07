@@ -210,8 +210,10 @@ class FullStructureReconstructor(object):
         '''
         Updates the res_id_to_resname dictionary.
         Used whenever we want to change the amino acid type of a residue, for mutations and whatnot.
+        Need to update copy structure as well.
         '''
-        self._update_resnames(res_id_to_resname_to_update, False, False)
+        self._update_resnames(res_id_to_resname_to_update, copy_structure=True)
+        self._update_resnames(res_id_to_resname_to_update)
     
     def _update_resnames(self, res_id_to_resname_to_update: Dict[Tuple, str], original_structure: bool = False, copy_structure: bool = False):
         '''
@@ -228,10 +230,10 @@ class FullStructureReconstructor(object):
             _check_keys_exist(self.original_structure__res_id_to_resname, res_id_to_resname_to_update)
             self.original_structure__res_id_to_resname.update(res_id_to_resname_to_update)
         elif copy_structure:
-            _check_keys_exist(self.original_structure__res_id_to_resname, res_id_to_resname_to_update)
+            _check_keys_exist(self.copy__res_id_to_resname, res_id_to_resname_to_update)
             self.copy__res_id_to_resname.update(res_id_to_resname_to_update)
         else:
-            _check_keys_exist(self.original_structure__res_id_to_resname, res_id_to_resname_to_update)
+            _check_keys_exist(self.res_id_to_resname, res_id_to_resname_to_update)
             self.res_id_to_resname.update(res_id_to_resname_to_update)
         
         for res_id, resname in res_id_to_resname_to_update.items():
@@ -331,12 +333,20 @@ class FullStructureReconstructor(object):
         for atom_id in atoms_to_detach:
             residue.detach_child(atom_id)
 
-    def remove_all_sidechains(self, keep_CB: bool = False):
+    def remove_all_sidechains(self, keep_CB: bool = False, original_structure: bool = False, copy_structure: bool = False):
         '''
-        Removes all sidechains from internal representation of structure.
+        Removes all sidechains from internal representation of structure. Also removes them from the copy structure.
         NOTE: DOES NOT remove hetero residues. This is not ideal, BUT the hetero residues do not play nice with the internal_coords module, so we have to keep them.
         '''
-        self._remove_all_sidechains(self.structure, keep_CB=keep_CB)
+
+        if original_structure:
+            structure = self.original_structure
+        elif copy_structure:
+            structure = self.structure_copy
+        else:
+            structure = self.structure
+
+        self._remove_all_sidechains(structure, keep_CB=keep_CB)
 
     def _remove_all_sidechains(self, structure: Structure, keep_CB: bool = False):
         '''
@@ -346,7 +356,106 @@ class FullStructureReconstructor(object):
         for residue in Selection.unfold_entities(structure, 'R'):
             if residue.resname in THE20 and not self._is_hetero(residue):
                 self._remove_sidechain(residue, keep_CB=keep_CB)
+
+    def remove_sidechains_for_res_ids(self, res_ids: List[Tuple], keep_CB: bool = False, original_structure: bool = False, copy_structure: bool = False):
+        '''
+        Removes sidechains at desired sites from internal representation of structure.
+        NOTE: DOES NOT remove hetero residues. This is not ideal, BUT the hetero residues do not play nice with the internal_coords module, so we have to keep them.
+        '''
+        for res_id in res_ids:
+            residue = self._get_residue_from_res_id(res_id, original_structure=original_structure, copy_structure=copy_structure)
+            if residue.resname in THE20 and not self._is_hetero(residue):
+                self._remove_sidechain(residue, keep_CB=keep_CB)
     
+    def detect_res_ids_with_missing_sidechains(self, original_structure: bool = False, copy_structure: bool = False):
+        '''
+        Returns a list of res_ids that have missing sidechains.
+        '''
+        if original_structure:
+            structure = self.original_structure
+        elif copy_structure:
+            structure = self.structure_copy
+        else:
+            structure = self.structure
+        
+        return self._detect_res_ids_with_missing_sidechains(structure)
+    
+    def _detect_res_ids_with_missing_sidechains(self, structure: Structure):
+        '''
+        Returns a list of res_ids that have missing sidechains. CB is included in the side-chain.
+        Return
+        '''
+        res_ids_with_missing_sidechains = []
+        for residue in Selection.unfold_entities(structure, 'R'):
+            if residue.resname in THE20 and not self._is_hetero(residue):
+                set_curr_atoms = set([atom.id for atom in residue.get_atoms()])
+                set_sidechain_atoms_for_resname = set(self.RECONSTRUCTION_PARAMS[residue.resname]['sidechain atoms'])
+
+                # check all babckbone atoms are there --> if not, there's an error
+                if SET_BB_ATOMS.intersection(set_curr_atoms) != SET_BB_ATOMS:
+                    warnings.warn('Warning: missing backbone atoms for {}, BB atoms present: {}'.format(residue.resname, SET_BB_ATOMS.intersection(set_curr_atoms)))
+
+                set_sidechain_atoms_present = (set_curr_atoms - SET_BB_ATOMS) - {'OXT'} # remove OXT from the count since it just happens at the terminal carboxyl group
+                if len(set_sidechain_atoms_present) == 0: # no sidechains atoms!
+                    if residue.resname not in {'GLY'}:
+                        res_ids_with_missing_sidechains.append(self._get_residue_id(residue))
+                elif len(set_sidechain_atoms_present) < len(set_sidechain_atoms_for_resname): # some sidechain, weird
+                    warnings.warn('Warning: missing some, but not all, sidechain atoms for {}, sidechain atoms present: {}. Treating it as if all atoms were missing.'.format(residue.resname, set_sidechain_atoms_present))
+                    res_ids_with_missing_sidechains.append(self._get_residue_id(residue))
+                elif len(set_sidechain_atoms_present) > len(set_sidechain_atoms_for_resname): # more side-chain atoms than there should be? something is wrong
+                    warnings.warn('Warning: more sidechain atoms than there should be for {}, sidechain atoms present: {}.'.format(residue.resname, set_sidechain_atoms_present))
+        
+        return res_ids_with_missing_sidechains
+    
+    def all_sidechains_are_missing(self, res_ids_with_missing_sidechains: Optional[List[Tuple]]= None, original_structure: bool = False, copy_structure: bool = False) -> bool:
+        '''
+        Returns True if all sidechains are missing, False otherwise.
+        '''
+        if original_structure:
+            structure = self.original_structure
+        elif copy_structure:
+            structure = self.structure_copy
+        else:
+            structure = self.structure
+        
+        all_res_ids_no_gly = list(filter(lambda res_id: self._get_resname_from_res_id(res_id) != 'GLY', self.get_res_ids()))
+
+        if res_ids_with_missing_sidechains is None:
+            res_ids_with_missing_sidechains = self._detect_res_ids_with_missing_sidechains(structure)
+        
+        return set(res_ids_with_missing_sidechains) == set(all_res_ids_no_gly)
+    
+    def find_residues_in_surrounding(self, res_ids_anchor: List[Tuple], radius: float = 10.0, original_structure: bool = False, copy_structure: bool = False):
+
+        assert radius >= 0, 'Radius must be nonnegative.'
+
+        # get structure
+        if original_structure:
+            structure = self.original_structure
+        elif copy_structure:
+            structure = self.structure_copy
+        else:
+            structure = self.structure
+
+        NBSearch = NeighborSearch(list(filter(lambda atom_obj: atom_obj.id == 'CB', structure.get_atoms())))
+
+        set_res_ids_anchor = set(res_ids_anchor)
+
+        res_ids_in_surrounding = set()
+        for res_id in res_ids_anchor:
+            central_residue = self._get_residue_from_res_id(res_id, original_structure=original_structure, copy_structure=copy_structure)
+
+            central_CB = central_residue.child_dict['CB']
+            nb_atom_objects = NBSearch.search(central_CB.coord, radius+1e-9, level='A') # radius must be positive
+
+            for atom in nb_atom_objects:
+                if self._get_residue_id(atom.get_parent()) in set_res_ids_anchor: # exclude residues in the set
+                    continue
+                res_ids_in_surrounding.add(self._get_residue_id(atom.get_parent()))
+        
+        return list(res_ids_in_surrounding)
+        
+
     def add_all_virtual_CB(self):
         res_ids = self.get_res_ids()
         for res_id in res_ids:

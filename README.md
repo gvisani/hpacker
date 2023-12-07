@@ -8,11 +8,11 @@ This repo contains code for [H-Packer](https://arxiv.org/abs/2311.09312), a meth
 
 - Packing side-chain conformations of a full structure, providing a backbone structure and desired sequence information
 - Refining side-chain conformations of a full structure
-- Repacking full structures after applying mutations
+- Add and pack side-chains in *parts* of a structure (keeping some of the structure constant)
+- Apply mutations and selectively pack the surrounding side-chains
 
 ## Coming soon
 
-- Pack or refine the side-chains in *parts* of a structure (keeping some of the structure constant)
 - Training new HPacker models
 
 
@@ -50,7 +50,7 @@ As simple as a few lines of code:
 ```python
 from hpacker import HPacker
 # Initialize HPacker object by passing it a tutple of paths to the pre-trained models, and the backbone-only structure that you want to add side-chains to
-hpacker = HPacker(['pretrained_models/initial_guess','pretrained_models/refinement'], 'T0950_bb_only.pdb')
+hpacker = HPacker(['pretrained_models/initial_guess','pretrained_models/refinement','pretrained_models/initial_guess_conditioned'], 'T0950_bb_only.pdb')
 hpacker.reconstruct_sidechains(num_refinement_iterations=5)
 hpacker.write_pdb('reconstructed_from_bb_only_T0950.pdb')
 ```

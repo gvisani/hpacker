@@ -34,13 +34,16 @@ AA_CHANNELS = [b'A', b'R', b'N', b'D', b'C', b'Q', b'E', b'H', b'I', b'L', b'K',
 
 INITIAL_GUESS_MODEL_IDX = 0
 REFINEMENT_MODEL_IDX = 1
+INITIAL_GUESS_CONDITIONED_MODEL_IDX = 2
 
 class HPacker(FullStructureReconstructor):
 
     def __init__(self,
-                 model_dirs: List[str],
                  *args, 
-                 charges_filepath: Optional[str] = 'src/preprocessing/utils/charges.rtp',
+                 model_dirs: List[str] = [os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pretrained_models/initial_guess'),
+                                          os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pretrained_models/refinement'),
+                                          os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pretrained_models/initial_guess_conditioned')],
+                 charges_filepath: Optional[str] = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src/preprocessing/utils/charges.rtp'),
                  verbose: str = False,
                  **kwargs):
 
@@ -85,7 +88,7 @@ class HPacker(FullStructureReconstructor):
 
     def _init_models(self, model_dirs: List[str]):
 
-        assert len(model_dirs) == 2 # first model is backbone only, second model is all sidechains (minus central one of course)
+        assert len(model_dirs) == 3 # first model is backbone only, second model is all sidechains (minus central one of course), third model is some side-chains only
 
         self.model_dirs = model_dirs
         self.hparams = []
@@ -98,7 +101,7 @@ class HPacker(FullStructureReconstructor):
                 hparams = json.load(f)
 
             data_irreps, ls_indices = get_data_irreps(hparams)
-            model, loss_fn, device = general_model_init(model_dir, hparams, data_irreps)
+            model, loss_fn, device = general_model_init(model_dir, hparams, data_irreps, verbose=self.verbose)
             model.load_state_dict(torch.load(os.path.join(model_dir, 'lowest_valid_loss_model.pt'), map_location=torch.device(device)))
             model.eval()
 
@@ -338,24 +341,34 @@ class HPacker(FullStructureReconstructor):
             self._add_charges_to_residue(self._get_residue_from_res_id(res_id))
             return chi_angles
 
-    def initial_guess(self, batch_size=1, **kwargs):
+    def initial_guess(self, res_ids=None, batch_size=1, **kwargs):
         self.structure_copy.atom_to_internal_coordinates()
         if batch_size == 1:
-            return self.predict_and_add_all_sidechains(INITIAL_GUESS_MODEL_IDX, **kwargs)
+            if res_ids is None: # use model trained only on backbone neighborhoods
+                return self.predict_and_add_sidechains(INITIAL_GUESS_MODEL_IDX, **kwargs)
+            else: # use model trained on partial neighborhoods
+                return self.predict_and_add_sidechains(INITIAL_GUESS_CONDITIONED_MODEL_IDX, res_ids_to_predict=res_ids, **kwargs)
         else:
-            return self.predict_and_add_all_sidechains__batch(INITIAL_GUESS_MODEL_IDX, batch_size=batch_size, **kwargs)
+            if res_ids is None:
+                return self.predict_and_add_sidechains__batch(INITIAL_GUESS_MODEL_IDX, batch_size=batch_size, **kwargs)
+            else:
+                return self.predict_and_add_sidechains__batch(INITIAL_GUESS_CONDITIONED_MODEL_IDX, res_ids_to_predict=res_ids, batch_size=batch_size, **kwargs)
     
-    def refinement(self, batch_size=1, **kwargs):
+    def refinement(self, res_ids=None, batch_size=1, **kwargs):
         self.structure_copy.atom_to_internal_coordinates()
         if batch_size == 1:
-            return self.predict_and_add_all_sidechains(REFINEMENT_MODEL_IDX, **kwargs)
+            return self.predict_and_add_sidechains(REFINEMENT_MODEL_IDX, res_ids_to_predict=res_ids, **kwargs)
         else:
-            return self.predict_and_add_all_sidechains__batch(REFINEMENT_MODEL_IDX, batch_size=batch_size, **kwargs)
+            return self.predict_and_add_sidechains__batch(REFINEMENT_MODEL_IDX, res_ids_to_predict=res_ids, batch_size=batch_size, **kwargs)
     
-    def predict_and_add_all_sidechains(self, model_idx):
-        assert model_idx in {INITIAL_GUESS_MODEL_IDX, REFINEMENT_MODEL_IDX}
+    def predict_and_add_sidechains(self,
+                                   model_idx: int,
+                                   res_ids_to_predict: Optional[List[Tuple]] = None):
+        assert model_idx in {INITIAL_GUESS_MODEL_IDX, REFINEMENT_MODEL_IDX, INITIAL_GUESS_CONDITIONED_MODEL_IDX}
+        if res_ids_to_predict is None:
+            res_ids_to_predict = self.get_res_ids()
         res_id_to_chi_angles = {}
-        for res_id in self.get_res_ids():
+        for res_id in res_ids_to_predict:
             resname = self._get_resname_from_res_id(res_id)
             if resname == 'GLY':
                 continue
@@ -366,7 +379,7 @@ class HPacker(FullStructureReconstructor):
         
         if model_idx == REFINEMENT_MODEL_IDX:
             # trick: just strip sidechains of the structure and then add them back in with the new chi angles
-            self._remove_all_sidechains(self.structure, keep_CB=self.virtual_CB) # the present CBs now are the virtual ones!
+            self.remove_sidechains_for_res_ids(res_ids_to_predict, keep_CB=self.virtual_CB) # the present CBs now are the virtual ones!
 
         self._add_multiple_sidechains_with_chi_angles(res_id_to_chi_angles)
         self._add_charges_to_structure(self.structure)
@@ -374,12 +387,19 @@ class HPacker(FullStructureReconstructor):
         return res_id_to_chi_angles
     
     # @profile
-    def predict_and_add_all_sidechains__batch(self, model_idx, batch_size=128):
-        assert model_idx in {INITIAL_GUESS_MODEL_IDX, REFINEMENT_MODEL_IDX}
+    def predict_and_add_sidechains__batch(self,
+                                          model_idx: int,
+                                          res_ids_to_predict: Optional[List[Tuple]] = None,
+                                          batch_size: int = 128):
+        '''
+        If res_ids is None, then predict and add sidechains to all residues in the structure.
+        '''
+        assert model_idx in {INITIAL_GUESS_MODEL_IDX, REFINEMENT_MODEL_IDX, INITIAL_GUESS_CONDITIONED_MODEL_IDX}
         res_id_to_chi_angles = {}
-        res_ids = self.get_res_ids()
-        res_ids_ala = list(filter(lambda res_id: self._get_resname_from_res_id(res_id) == 'ALA', res_ids))
-        res_ids = list(filter(lambda res_id: self._get_resname_from_res_id(res_id) not in {'GLY', 'ALA'}, res_ids))
+        if res_ids_to_predict is None:
+            res_ids_to_predict = self.get_res_ids()
+        res_ids_ala = list(filter(lambda res_id: self._get_resname_from_res_id(res_id) == 'ALA', res_ids_to_predict))
+        res_ids = list(filter(lambda res_id: self._get_resname_from_res_id(res_id) not in {'GLY', 'ALA'}, res_ids_to_predict))
         num_batches = len(res_ids) // batch_size
         if len(res_ids) % batch_size != 0:
             num_batches += 1
@@ -399,7 +419,7 @@ class HPacker(FullStructureReconstructor):
         
         if model_idx == REFINEMENT_MODEL_IDX:
             # trick: just strip sidechains of the structure and then add them back in with the new chi angles
-            self._remove_all_sidechains(self.structure, keep_CB=self.virtual_CB) # the present CBs now are the virtual ones!
+            self.remove_sidechains_for_res_ids(res_ids_to_predict, keep_CB=self.virtual_CB) # the present CBs now are the virtual ones!
 
         self._add_multiple_sidechains_with_chi_angles(res_id_to_chi_angles)
         self._add_charges_to_structure(self.structure)
@@ -649,6 +669,9 @@ class HPacker(FullStructureReconstructor):
         ## compute internal coords for the original structure
         self.original_structure.atom_to_internal_coordinates()
 
+        ## preliminarily remove all sidechains, though I am not sure it matters (still, better to be safe than sorry)
+        self.remove_all_sidechains()
+
         # get real chi angle values
         res_ids = self.get_res_ids()
         real_res_id_to_angles = {}
@@ -706,6 +729,12 @@ class HPacker(FullStructureReconstructor):
     def reconstruct_sidechains(self,
                                 num_refinement_iterations: int = 5,
                                 res_id_to_resname: Optional[Dict[Tuple, str]] = None,
+
+                                reconstruct_all_sidechains: bool = False,
+                                res_ids_to_reconstruct: List[Tuple] = None,
+                                proximity_cutoff_for_refinement: float = 10.0,
+                                res_ids_to_refine: List[Tuple] = None,
+
                                 batch_size: int = 128,
                                 return_trace_of_predicted_angles: bool = False):
         '''
@@ -713,19 +742,56 @@ class HPacker(FullStructureReconstructor):
         Populates the internal representation of the structure with the desired amino acid compositions.
         If provided, use the specified amino acid types for the specified residues.
         Otherwise, use the amino acid types specified in the PDB file.
+
+        reconstruct_all_sidechains :: Overrides everything else
+        res_id_to_resname :: Dictionary of mutations, 
+        res_ids_to_reconstruct :: Residues that are to be reconstructed from scratch (initial_guess plus refinement). Overrides default choice of reconstructing res_ids without sidechains.
+        proximity_cutoff_for_refinement :: Distance between CBs that defines which residues are considered close enough to be refined, even if they weren't reconstructed from scratch.
+        res_ids_to_refine :: Overrides default choice of res_ids close to the ones reconstructed from scratch. Note that residues reconstructed from scratch also get refined by default.
+
+        # NOTE: update resnames and add dummy atomas to copy structure AFTER computing residues that have no sidechains, otherwise the computation would give a bunch of errors
+        # NOTE: behavior when res_ids_to_reconstruct does not contain all residues that have missing side-chains is **undefined**. It might return something but the predictions might not be good since the refinement model will be run on partial neighborhoods.
         '''
 
-        if res_id_to_resname is not None:
-            self._update_resnames(res_id_to_resname)
+        assert proximity_cutoff_for_refinement >= 0, 'proximity_cutoff_for_refinement must be non-negative'
 
-        ## add all dummy atoms to the copy structure
-        self._add_all_dummy_atoms(self.structure_copy)
+        # add the residues in 
+        if res_ids_to_reconstruct is None and res_id_to_resname is not None:
+            res_ids_to_reconstruct = list(res_id_to_resname.keys())
+        elif res_ids_to_reconstruct is not None and res_id_to_resname is not None:
+            res_ids_to_reconstruct = list(set(res_ids_to_reconstruct + list(res_id_to_resname.keys())))
         
         angles_trace = []
 
-        # make initial guess with backboone atoms only
+        # make initial guess with backbone atoms only
         start = time.time()
-        initial_guess_res_id_to_angles = self.initial_guess(batch_size=batch_size)
+
+        if reconstruct_all_sidechains:
+            self.remove_all_sidechains()
+            if res_id_to_resname is not None:
+                self.update_resnames(res_id_to_resname)
+            
+            self._add_all_dummy_atoms(self.structure_copy)
+            initial_guess_res_id_to_angles = self.initial_guess(batch_size=batch_size)
+        else:
+            # by default, only reconstruct sidechains for all residues that don't have them
+            if res_ids_to_reconstruct is None:
+                res_ids_to_reconstruct = self.detect_res_ids_with_missing_sidechains()
+
+            else:
+                self.remove_sidechains_for_res_ids(res_ids_to_reconstruct) # remove side-chains for the specified residues, just to be safe
+                self.remove_sidechains_for_res_ids(res_ids_to_reconstruct, copy_structure=True)
+            
+            # if all sidechains are missing, then use the initial_guess model, so set res_ids to None
+            if self.all_sidechains_are_missing(res_ids_to_reconstruct):
+                res_ids_to_reconstruct = None
+
+            if res_id_to_resname is not None:
+                self.update_resnames(res_id_to_resname)
+            
+            self._add_all_dummy_atoms(self.structure_copy)
+            initial_guess_res_id_to_angles = self.initial_guess(batch_size=batch_size, res_ids=res_ids_to_reconstruct)
+
         if self.verbose: print('Initial guess took %.2f seconds' % (time.time() - start))
 
         angles_trace.append(initial_guess_res_id_to_angles)
@@ -736,7 +802,18 @@ class HPacker(FullStructureReconstructor):
             if self.verbose: print(f'Iteration {i+1}/{num_refinement_iterations}')
 
             start = time.time()
-            refined_res_id_to_angles = self.refinement(batch_size=batch_size)
+
+            if reconstruct_all_sidechains or res_ids_to_reconstruct is None:
+                refined_res_id_to_angles = self.refinement(batch_size=batch_size)
+            else:
+                # by default, only refine sidechains for all residues that don't have them
+                if res_ids_to_refine is None:
+                    res_ids_to_refine = list(set(res_ids_to_reconstruct + self.find_residues_in_surrounding(res_ids_to_reconstruct, radius=proximity_cutoff_for_refinement)))
+                else:
+                    res_ids_to_refine = list(set(res_ids_to_reconstruct + res_ids_to_refine)) # add the residues that were reconstructed from scratch
+
+                refined_res_id_to_angles = self.refinement(batch_size=batch_size, res_ids=res_ids_to_refine)
+            
             elapsed = time.time() - start
             time_refinement += elapsed
             if self.verbose: print('Refinement for %d times took %.2f seconds' % (i+1, time_refinement))
@@ -747,10 +824,12 @@ class HPacker(FullStructureReconstructor):
     
     def refine_sidechains(self,
                             num_refinement_iterations: int = 5,
+                            res_ids: Optional[List[Tuple]] = None,
                             batch_size: int = 128,
                             return_trace_of_predicted_angles: bool = False):
         '''
         Use this when you already have resonably good sidechains in the structure and only want to refine them.
+        If res_ids is None, then refine all residues in the structure.
         '''
 
         ## add all dummy atoms to the copy structure
@@ -764,7 +843,7 @@ class HPacker(FullStructureReconstructor):
             if self.verbose: print(f'Iteration {i+1}/{num_refinement_iterations}')
 
             start = time.time()
-            refined_res_id_to_angles = self.refinement(batch_size=batch_size)
+            refined_res_id_to_angles = self.refinement(res_ids=res_ids, batch_size=batch_size)
             elapsed = time.time() - start
             time_refinement += elapsed
             if self.verbose: print('Refinement for %d times took %.2f seconds' % (i+1, time_refinement))
