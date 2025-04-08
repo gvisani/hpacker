@@ -51,10 +51,9 @@ As simple as a few lines of code:
 
 ```python
 from hpacker import HPacker
-# Initialize HPacker object by passing it a tutple of paths to the pre-trained models, and the backbone-only structure that you want to add side-chains to
-hpacker = HPacker(['pretrained_models/initial_guess','pretrained_models/refinement','pretrained_models/initial_guess_conditioned'], 'T0950_bb_only.pdb')
+hpacker = HPacker('T0950_bb_only.pdb') # backbone-only input
 hpacker.reconstruct_sidechains(num_refinement_iterations=5)
-hpacker.write_pdb('reconstructed_from_bb_only_T0950.pdb')
+hpacker.write_pdb('reconstructed_from_bb_only_T0950.pdb') # output PDB with reconstructed sidechains
 ```
 
 See the provided [hpacker.ipynb notebook](hpacker.ipynb) for more examples, as well as explanations of the inner workings of H-Packer.
