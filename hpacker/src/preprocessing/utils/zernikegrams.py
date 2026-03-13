@@ -157,7 +157,7 @@ def zernike_coeff_lm_new(
     l_sph_harm_tile = np.tile(lm_unique_combs[:, 0], (p.shape[1], 1)).T
     m_sph_harm_tile = np.tile(lm_unique_combs[:, 1], (p.shape[1], 1)).T
 
-    y_unique = np.conj(sp.special.sph_harm(m_sph_harm_tile, l_sph_harm_tile,
+    y_unique = np.conj(sp.special.sph_harm_y(m_sph_harm_tile, l_sph_harm_tile,
                                            p[:num_lm_combs], t[:num_lm_combs]))
     y = y_unique[lm_inv_map]
 

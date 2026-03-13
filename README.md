@@ -38,7 +38,7 @@ NOTE: It seems that the biopython version is important. On version 1.85, the ass
 Then, run
 
 ```bash
-python setup.py install
+pip install .
 ```
 
 to install the code in this repo as a package.
