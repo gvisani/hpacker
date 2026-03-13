@@ -51,7 +51,7 @@ to install the code in this repo as a package.
 pip install -e .
 ```
 
-**Update from 3/13/2026:** Install package via "python3 setup.py install"
+**Update from 3/13/2026:** Repo was reworked to make hpacker installed as a package and be visible anywhere
 
 </details>
 
