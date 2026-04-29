@@ -51,7 +51,7 @@ to install the code in this repo as a package.
 pip install -e .
 ```
 
-**Update from 3/13/2026:** Repo was reworked to make hpacker installed as a package and be visible anywhere
+**Update from 3/13/2026:** Install package via "python3 setup.py install"
 
 </details>
 
@@ -67,6 +67,17 @@ hpacker.write_pdb('reconstructed_from_bb_only_T0950.pdb') # output PDB with reco
 ```
 
 See the provided [hpacker.ipynb notebook](hpacker.ipynb) for more examples, as well as explanations of the inner workings of H-Packer.
+
+## Testing
+
+If you apply changes to the repo, we provide a simple test to check the correctness of your changes.
+Running `test.py` should yield the output (with some possible stochasticity in exact deviations):
+```
+All-atom RMSD:   0.9623 Å  (2766 atoms)
+Backbone RMSD:   0.0000 Å  (1368 atoms)
+Sidechain RMSD:  1.3536 Å  (1398 atoms)
+```
+
 
 ## Training HPacker
 
