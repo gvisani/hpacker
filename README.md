@@ -33,7 +33,9 @@ conda activate hpacker
 conda install pytorch==1.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
 pip install biopython==1.81 tqdm==4.67.1 progress==1.6 h5py==3.13.0 hdf5plugin==5.1.0 sqlitedict==2.1.0 'numpy<2' e3nn==0.5.0 mkl==2024.0
 ```
-NOTE: It seems that the biopython version is important. On version 1.85, the assert `assert num_atoms_in_center_residue == 3, f'There are {num_atoms_in_center_residue} atoms in the central residue!'` fails. We currently don't know why this happens on 1.85.
+NOTES on versions:
+- The `biopython` version is important. On version 1.85, the assert `assert num_atoms_in_center_residue == 3, f'There are {num_atoms_in_center_residue} atoms in the central residue!'` fails. We currently don't know why this happens on 1.85.
+- `e3nn` must be pinned to version 0.5.0, as it must match the version used to train the models. If there is a version mismatch, the models will run, but the output will be wrong - it's a bit like running a model with different weights
 
 Then, run
 
